@@ -44,6 +44,7 @@ const CartScreen = (props) => {
           disabled={cartItems.length === 0}
           onPress={() => {
             dispatch(ordersActions.addOrder(cartItems, cartTotalAmount));
+            props.navigation.navigate("Orders");
           }}
         />
       </View>
@@ -52,6 +53,7 @@ const CartScreen = (props) => {
         keyExtractor={(item) => item.productId}
         renderItem={(itemData) => (
           <CartItem
+            deletable
             quantity={itemData.item.quantity}
             title={itemData.item.productTitle}
             amount={itemData.item.sum}
