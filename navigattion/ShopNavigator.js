@@ -8,9 +8,10 @@ import Icon from "react-native-vector-icons/Ionicons";
 import ProductOverview from "../screens/ProductOverview";
 import ProductDetails from "../screens/ProductDetails";
 import CartScreen from "../screens/CartScreen";
-import OrdeerScreen from "../screens/OrderScreen";
-import Colors from "../constants/Colors";
 import OrderScreen from "../screens/OrderScreen";
+import UserProducts from "../screens/UserProducts";
+
+import Colors from "../constants/Colors";
 
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -37,6 +38,13 @@ const OrdersNavigator = () => {
   return (
     <Stack.Navigator screenOptions={navOptions}>
       <Stack.Screen name="Orders" component={OrderScreen} />
+    </Stack.Navigator>
+  );
+};
+const AdminNavigator = () => {
+  return (
+    <Stack.Navigator screenOptions={navOptions}>
+      <Stack.Screen name="UserProducts" component={UserProducts} />
     </Stack.Navigator>
   );
 };
@@ -69,6 +77,19 @@ const ShopNavigator = () => {
             drawerIcon: ({ color }) => (
               <Icon
                 name={Platform.OS === "android" ? "md-list" : "ios-list"}
+                size={23}
+                color={color}
+              />
+            ),
+          }}
+        />
+        <Drawer.Screen
+          name="Admin"
+          component={AdminNavigator}
+          options={{
+            drawerIcon: ({ color }) => (
+              <Icon
+                name={Platform.OS === "android" ? "md-create" : "ios-create"}
                 size={23}
                 color={color}
               />
