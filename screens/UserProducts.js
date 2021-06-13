@@ -1,14 +1,17 @@
 import React from "react";
 import { StyleSheet, Button, Platform, FlatList } from "react-native";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
 
+import * as productsActions from "../store/actions/products";
 import HeaderButton from "../components/UI/HeaderButton";
 import ProductItem from "../components/shop/ProductItem";
 import Colors from "../constants/Colors";
 
 const UserProducts = (props) => {
   const adminUserProducts = useSelector((state) => state.products.userProducts);
+  const dispatch = useDispatch();
+
   React.useLayoutEffect(() => {
     props.navigation.setOptions({
       title: "Your Products",
@@ -37,7 +40,13 @@ const UserProducts = (props) => {
           onSelect={() => {}}
         >
           <Button color={Colors.primary} title="Edit" onPress={() => {}} />
-          <Button color={Colors.primary} title="Delete" onPress={() => {}} />
+          <Button
+            color={Colors.primary}
+            title="Delete"
+            onPress={() => {
+              dispatch(productsActions.deleteProduct(itemData.item.id));
+            }}
+          />
         </ProductItem>
       )}
     />
