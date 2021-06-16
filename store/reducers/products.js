@@ -33,7 +33,7 @@ export default (state = initialState, action) => {
         (product) => product.id === action.pid
       );
       const updatedProduct = new Product(
-        action.pid,
+        new Date().toString(),
         state.userProducts[productIndex].ownerId,
         action.productData.title,
         action.productData.imageUrl,
