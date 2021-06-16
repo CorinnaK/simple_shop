@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, Button, Platform, FlatList } from "react-native";
+import { StyleSheet, Button, Platform, FlatList, Alert } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
 
@@ -11,6 +11,23 @@ import Colors from "../constants/Colors";
 const UserProducts = (props) => {
   const adminUserProducts = useSelector((state) => state.products.userProducts);
   const dispatch = useDispatch();
+
+  const editProductHandler = (id) => {
+    props.navigation.navigate("EditProduct", { productId: id });
+  };
+
+  const deleteHandler = (id) => {
+    Alert.alert("Deleting is permanent!", "Are you sure you want to delete?", [
+      { text: "Cancel", style: "default" },
+      {
+        text: "Confirm",
+        style: "destructive",
+        onPress: () => {
+          dispatch(productsActions.deleteProduct(id));
+        },
+      },
+    ]);
+  };
 
   React.useLayoutEffect(() => {
     props.navigation.setOptions({
@@ -26,6 +43,19 @@ const UserProducts = (props) => {
           />
         </HeaderButtons>
       ),
+      headerRight: () => (
+        <HeaderButtons HeaderButtonComponent={HeaderButton}>
+          <Item
+            title="Add"
+            iconName={
+              Platform.OS === "android" ? "md-add-circle" : "ios-add-circle"
+            }
+            onPress={() => {
+              props.navigation.navigate("EditProduct");
+            }}
+          />
+        </HeaderButtons>
+      ),
     });
   });
 
@@ -37,15 +67,21 @@ const UserProducts = (props) => {
           title={itemData.item.title}
           price={itemData.item.price}
           image={itemData.item.imageUrl}
-          onSelect={() => {}}
+          onSelect={() => {
+            editProductHandler(itemData.item.id);
+          }}
         >
-          <Button color={Colors.primary} title="Edit" onPress={() => {}} />
+          <Button
+            color={Colors.primary}
+            title="Edit"
+            onPress={() => {
+              editProductHandler(itemData.item.id);
+            }}
+          />
           <Button
             color={Colors.primary}
             title="Delete"
-            onPress={() => {
-              dispatch(productsActions.deleteProduct(itemData.item.id));
-            }}
+            onPress={deleteHandler.bind(this, itemData.item.id)}
           />
         </ProductItem>
       )}

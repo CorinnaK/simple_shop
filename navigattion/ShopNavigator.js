@@ -10,6 +10,7 @@ import ProductDetails from "../screens/ProductDetails";
 import CartScreen from "../screens/CartScreen";
 import OrderScreen from "../screens/OrderScreen";
 import UserProducts from "../screens/UserProducts";
+import EditProduct from "../screens/EditProduct";
 
 import Colors from "../constants/Colors";
 
@@ -45,6 +46,11 @@ const AdminNavigator = () => {
   return (
     <Stack.Navigator screenOptions={navOptions}>
       <Stack.Screen name="UserProducts" component={UserProducts} />
+      <Stack.Screen
+        name="EditProduct"
+        component={EditProduct}
+        initialParams={{ productId: false }}
+      />
     </Stack.Navigator>
   );
 };
