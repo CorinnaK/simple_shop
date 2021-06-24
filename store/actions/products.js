@@ -39,8 +39,19 @@ export const fetchProducts = () => {
   };
 };
 
-export const deleteProduct = (productId) => {
-  return { type: "DELETE_PRODUCT", pid: productId };
+export const deleteProduct = (id) => {
+  return async (dispatch) => {
+    const response = await fetch(
+      `https://react-native-tutorial-8f2dd-default-rtdb.firebaseio.com/products/${id}.json`,
+      {
+        method: "DELETE",
+      }
+    );
+    if (!response.ok) {
+      throw new Error("Something went wrong. Please try again");
+    }
+    dispatch({ type: DELETE_PRODUCT, pid: id });
+  };
 };
 
 export const createProduct = (title, description, imageUrl, price) => {
@@ -64,7 +75,7 @@ export const createProduct = (title, description, imageUrl, price) => {
     const resData = await response.json();
 
     dispatch({
-      type: "CREATE_PRODUCT",
+      type: CREATE_PRODUCT,
       productData: {
         id: resData.name,
         title,
@@ -77,13 +88,34 @@ export const createProduct = (title, description, imageUrl, price) => {
 };
 
 export const updateProduct = (id, title, description, imageUrl) => {
-  return {
-    type: "UPDATE_PRODUCT",
-    pid: id,
-    productData: {
-      title,
-      description,
-      imageUrl,
-    },
+  return async (dispatch) => {
+    const response = await fetch(
+      `https://react-native-tutorial-8f2dd-default-rtdb.firebaseio.com/products/${id}.json`,
+      {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          title,
+          description,
+          imageUrl,
+        }),
+      }
+    );
+
+    if (!response.ok) {
+      throw new Error("Something went wrong. Please try again");
+    }
+
+    dispatch({
+      type: UPDATE_PRODUCT,
+      pid: id,
+      productData: {
+        title,
+        description,
+        imageUrl,
+      },
+    });
   };
 };
