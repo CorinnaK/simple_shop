@@ -19,7 +19,7 @@ const formReducer = (state, action) => {
   if (action.type === FORM_INPUT_UPDATE) {
     const updatedValues = {
       ...state.inputValues,
-      [action.input]: action.value,
+      [action.input]: action.value.toString(),
     };
     const updatedValidities = {
       ...state.inputValidities,
@@ -160,14 +160,15 @@ const EditProduct = (props) => {
               keyboardType="decimal-pad"
               returnKeyType="next"
               onInputChange={onInputChangeHandler}
-              initialValue={edittedProduct ? edittedProduct.price : ""}
+              initialValue={
+                edittedProduct ? edittedProduct.price.toString() : ""
+              }
               initiallyValid={!!edittedProduct}
               required
               min={0.1}
             />
             <Input
               id="description"
-              editable={edittedProduct ? false : true}
               label="Description"
               errorText="Please enter a valid description"
               keyboardType="default"
