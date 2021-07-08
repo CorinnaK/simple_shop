@@ -53,7 +53,7 @@ const CartScreen = (props) => {
         <Text style={styles.summaryText}>
           Total:{" "}
           <Text style={styles.amount}>
-            ${Math.round(cartTotalAmount.toFixed(2) * 100) / 100}
+            ${(Math.round(cartTotalAmount * 100) / 100).toFixed(2)}
           </Text>
         </Text>
         {isLoading ? (

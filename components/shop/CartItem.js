@@ -16,6 +16,7 @@ const CartItem = (props) => {
     Platform.OS === "android" && Platform.Version >= 21
       ? TouchableNativeFeedback
       : TouchableOpacity;
+  const amount = props.amount;
 
   return (
     <View style={styles.cartItem}>
@@ -24,7 +25,7 @@ const CartItem = (props) => {
         <Text style={styles.mainText}>{props.title}</Text>
       </View>
       <View style={styles.itemData}>
-        <Text style={styles.mainText}>{props.amount.toFixed(2)}</Text>
+        <Text style={styles.mainText}>{amount.toFixed(2)}</Text>
         <View style={styles.deleteButton}>
           {props.deletable && (
             <TouchableCmp onPress={props.onRemove}>

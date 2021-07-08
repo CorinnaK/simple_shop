@@ -1,5 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { FlatList, View, StyleSheet, ActivityIndicator } from "react-native";
+import {
+  FlatList,
+  View,
+  StyleSheet,
+  ActivityIndicator,
+  Text,
+} from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
 import * as ordersActions from "../store/actions/order";
@@ -46,6 +52,14 @@ const OrderScreen = (props) => {
     );
   }
 
+  if (orders.length === 0) {
+    return (
+      <View style={styles.empty}>
+        <Text>No orders found. You will need to order some products.</Text>
+      </View>
+    );
+  }
+
   return (
     <FlatList
       data={orders}
@@ -62,6 +76,11 @@ const OrderScreen = (props) => {
 
 const styles = StyleSheet.create({
   centered: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  empty: {
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
